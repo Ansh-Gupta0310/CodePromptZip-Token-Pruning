@@ -1,0 +1,34 @@
+# Environments
+venv/
+env/
+.env
+
+# Large model files
+*.gguf
+*.pt
+*.safetensors
+*.bin
+
+# Project specific directories to ignore (large data/checkpoints)
+checkpoints/
+data/raw/
+data/compression_dataset/
+data/processed/
+results/
+logs/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db

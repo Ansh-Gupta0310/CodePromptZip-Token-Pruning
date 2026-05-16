@@ -1,0 +1,4 @@
+python scripts/run_all_evaluations.py --config configs/config.yaml --checkpoint ./checkpoints/best_model --max_eval_samples 2000
+
+
+python scripts/run_all_evaluations.py --config configs/config.yaml --checkpoint ./checkpoints/best_model --max_eval_samples 2000 --skip_existing

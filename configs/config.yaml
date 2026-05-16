@@ -1,0 +1,109 @@
+# ============================================================
+# CodePromptZip Configuration
+# ============================================================
+
+# --- Model ---
+model:
+  compressor_name: "Salesforce/codet5-large"   # CodeT5-large (770M params)
+  use_copy_mechanism: true
+  max_source_length: 512
+  max_target_length: 512
+
+# --- Base LM (for downstream evaluation) ---
+base_lm:
+  model_path: "codellama-34b-instruct.Q4_K_M.gguf"  # 34B model — best quality that fits in 24GB (uses ~19GB)
+  n_ctx: 8192          # Doubled context window — 4090 holds KV cache for 8K tokens
+  n_gpu_layers: 128    # All layers of 34B model fully on GPU (34B has 48 transformer layers + aux)
+  temperature: 0.0     # Deterministic generation
+  max_tokens: 512      # 512 tokens for complete method-level fixes
+ 
+# --- Training ---
+training:
+  batch_size: 8                  # Physical batch per step — gradient_accumulation_steps=4 gives effective batch=32
+  gradient_accumulation_steps: 4 # Accumulate 4 steps → effective batch = 8×4 = 32 (same as paper)
+  learning_rate: 5.0e-5
+  weight_decay: 0.01
+  num_epochs: 10
+  warmup_steps: 500
+  fp16: true                     # FP16 via torch.amp — 4090 Tensor Cores optimized for FP16
+  gradient_checkpointing: true   # REQUIRED for codet5-large on 24GB: recomputes activations during backward
+                                 # instead of storing them, saving ~10GB at ~20% throughput cost
+  save_steps: 1000
+  eval_steps: 250
+  logging_steps: 25
+  seed: 42
+  output_dir: "./checkpoints"
+  log_dir: "./logs"
+
+# --- Data ---
+data:
+  task: "bugs2fix"    # bugs2fix | assertion | suggestion
+  raw_dir: "./data/raw"
+  processed_dir: "./data/processed"
+  compression_dataset_dir: "./data/compression_dataset"
+  num_compression_ratios: 9            # τ_code ∈ {0.1, ..., 0.9}
+  compression_ratios: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+  train_split_ratio: 0.8
+  val_split_ratio: 0.1
+  test_split_ratio: 0.1
+  max_eval_samples: 2000              # Sample 2000 for evaluation (paper)
+
+# --- Retrieval ---
+retrieval:
+  method: "bm25"
+  num_shots: 1          # 1-shot by default
+  tokenize_method: "split"  # simple whitespace split for BM25
+
+# --- Priority Ranking (from paper's ablation study results) ---
+priority_ranking:
+  # Higher index = removed first (higher removal priority)
+  bugs2fix:
+    - "Identifier"   # Priority 1 (removed first)
+    - "Invocation"   # Priority 2
+    - "Structure"    # Priority 3
+    - "Symbol"       # Priority 4
+    - "Signature"    # Priority 5 (removed last)
+  assertion:
+    - "Invocation"
+    - "Symbol"
+    - "Identifier"
+    - "Structure"
+    - "Signature"
+  suggestion:
+    - "Invocation"
+    - "Structure"
+    - "Symbol"
+    - "Identifier"
+    - "Signature"
+
+# --- Special Tokens ---
+special_tokens:
+  task_tokens:
+    - "<ASSERTION>"
+    - "<BUGS2FIX>"
+    - "<SUGGESTION>"
+  ratio_tokens:
+    - "<Ratio>"
+    - "</Ratio>"
+  compress_tokens:
+    - "<Compress>"
+    - "</Compress>"
+  ratio_value_tokens:
+    - "0.1"
+    - "0.2"
+    - "0.3"
+    - "0.4"
+    - "0.5"
+    - "0.6"
+    - "0.7"
+    - "0.8"
+    - "0.9"
+
+# --- Evaluation ---
+evaluation:
+  default_tau_code: 0.3     # Default compression ratio for evaluation
+  num_shots: 1              # Default number of shots
+  metrics:
+    bugs2fix: "codebleu"
+    assertion: "exact_match"
+    suggestion: "codebleu"
