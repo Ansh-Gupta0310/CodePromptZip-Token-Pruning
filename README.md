@@ -6,8 +6,9 @@
 
 <p align="center">
   <a href="https://arxiv.org/abs/2502.14925"><img alt="Paper" src="https://img.shields.io/badge/📄_Paper-arXiv:2502.14925-b31b1b.svg?style=flat-square"></a>&nbsp;
-  <a href="#-pretrained-model"><img alt="Model" src="https://img.shields.io/badge/🤗_Model-HuggingFace-yellow.svg?style=flat-square"></a>&nbsp;
+  <a href="https://huggingface.co/anshgupta123/CodePromptZip-Token-Pruning"><img alt="Model" src="https://img.shields.io/badge/🤗_Model-HuggingFace-yellow.svg?style=flat-square"></a>&nbsp;
   <a href="https://github.com/microsoft/CodeXGLUE"><img alt="Dataset" src="https://img.shields.io/badge/📊_Dataset-CodeXGLUE-blue.svg?style=flat-square"></a>&nbsp;
+  <a href="https://github.com/prakrititz/Token-PruningNLP"><img alt="Other Implementation" src="https://img.shields.io/badge/💻_Code-Smaller_Scale_Impl.-lightgrey.svg?style=flat-square"></a>&nbsp;
   <img alt="Python" src="https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat-square&logo=python&logoColor=white">&nbsp;
   <img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-2.6+-EE4C2C.svg?style=flat-square&logo=pytorch&logoColor=white">
 </p>
@@ -502,6 +503,13 @@ compressed = compressor.compress(
 )
 print(compressed)
 ```
+
+<br/>
+
+## 💻 Smaller Scale Implementation
+
+A related, smaller-scale implementation of this project (trained and evaluated on an NVIDIA RTX 4060) can be found here:
+> 🔗 **[GitHub Repository: prakrititz/Token-PruningNLP](https://github.com/prakrititz/Token-PruningNLP)**
 
 <br/>
 
