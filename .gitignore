@@ -14,12 +14,13 @@ checkpoints/
 data/raw/
 data/compression_dataset/
 data/processed/
-results/
+results/*
+!results/plots/
 logs/
 
 # Python cache
 __pycache__/
-*.py[cod]
+*.py[cod] 
 *$py.class
 .pytest_cache/
 
