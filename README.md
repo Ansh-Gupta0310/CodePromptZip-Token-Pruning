@@ -487,9 +487,7 @@ Evaluate uncompressed demonstrations at multiple shot counts to isolate the effe
 
 The trained Copy-Enhanced CodeT5-large compressor checkpoint is available on HuggingFace:
 
-> 🤗 **[HuggingFace Model Hub — Coming Soon](#)**
->
-> *The model will be uploaded to HuggingFace and the link will be updated here.*
+> 🤗 **[HuggingFace Model: CodePromptZip-Token-Pruning](https://huggingface.co/anshgupta123/CodePromptZip-Token-Pruning)**
 
 **Quick usage:**
 
