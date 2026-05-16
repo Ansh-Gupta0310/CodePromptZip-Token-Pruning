@@ -514,9 +514,3 @@ print(compressed)
 | 3 | S. Lu et al. — *"CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation"*, NeurIPS 2021. [GitHub](https://github.com/microsoft/CodeXGLUE) |
 | 4 | B. Rozière et al. — *"Code Llama: Open Foundation Models for Code"*, Meta AI, 2023 |
 | 5 | S. Ren et al. — *"CodeBLEU: a Method for Automatic Evaluation of Code Synthesis"*, 2020 |
-
----
-
-<p align="center">
-  <sub>Built with ❤️ at IIIT Bangalore</sub>
-</p>
